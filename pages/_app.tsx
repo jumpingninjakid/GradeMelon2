@@ -121,8 +121,11 @@ function MyApp({ Component, pageProps }) {
 	}, [client,districtURL]);
 
 	function createError(message:string){
-		
-		setToasts((toasts) => [...toasts, { title: message.toLowerCase().includes("upgraded") ? "API Token Expired, Come back in like 30mins" : message, type: "error" }]);
+		const preSets={"upgraded":"API Token Expired, come back soon?","incorrect":"Username or Password is Incorrect","invalid":"Username or Password is Incorrect","load failed":"Network Error","failed to fetch":"Network Error:Try Again Later"};
+		for(let key in preSets){
+			if(message.toLowerCase().includes(key)){var message=preSets[key];break}
+		}
+		setToasts((toasts) => [...toasts, { title: message, type: "error" }]);
 			setTimeout(() => {
 				setToasts((toasts) => toasts.slice(1));
 			}, 5000);
