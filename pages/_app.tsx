@@ -217,7 +217,7 @@ const logout = async () => {
 
 					{!noShowNav.includes(router.pathname) && isMediumOrLarger && (
 						<div className="pb-16 md:pb-0">
-							<div className="flex">
+							<div className="flex overflow-x-auto">
 								<SideBar studentInfo={studentInfo} logout={logout} />
 								<AnimateSharedLayout>
 									<Component

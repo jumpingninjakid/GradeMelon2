@@ -412,7 +412,7 @@ export default function Grades({
 								width: `${course?.grade.raw < 100 ? course?.grade.raw : 100}%`,
 							}}
 						>
-							<p className="absolute">Total</p>
+							<p>Total</p>
 						</div>
 					</div>
 					{course?.categories.map(({ name, grade, points }, i) => (
