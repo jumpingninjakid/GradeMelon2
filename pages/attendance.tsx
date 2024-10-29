@@ -30,9 +30,10 @@ ChartJS.register(
 
 interface AttendanceProps {
 	client: any;
+	createError:(message:string)=>void;
 }
 
-export default function Attendance({ client }: AttendanceProps) {
+export default function Attendance({ client,createError}: AttendanceProps) {
 	const router = useRouter();
 	const [loading, setLoading] = useState(true);
 	const [data, setData] = useState<AttendanceType>();
@@ -48,7 +49,7 @@ export default function Attendance({ client }: AttendanceProps) {
 				setBarData(temp);
 				client.loadedAttendance=[res,temp]
 				console.log(temp);
-			});}else{
+			}).catch(error=>{createError(error.message)});}else{
 				setData(client.loadedAttendance[0]);
 				setBarData(client.loadedAttendance[1]);
 				setLoading(false);

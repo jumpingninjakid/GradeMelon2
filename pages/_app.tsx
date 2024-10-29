@@ -122,7 +122,7 @@ function MyApp({ Component, pageProps }) {
 	}, [client,districtURL]);
 
 	function createError(message:string){
-		const preSets={"upgraded":"API Token Expired, come back soon?","incorrect":"Username or Password is Incorrect","invalid":"Username or Password is Incorrect","load failed":"Network Error","failed to fetch":"Network Error:Try Again Later"};
+		const preSets={"upgraded":"API Token Expired, come back soon?","incorrect":"Username or Password is Incorrect","invalid":"Username or Password is Incorrect","load failed":"Network Error","failed to fetch":"Network Error:Try Again Later","socket":"Network Error"};
 		for(let key in preSets){
 			if(message.toLowerCase().includes(key)){var message=preSets[key];break}
 		}

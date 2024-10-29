@@ -26,11 +26,11 @@ import { BsGraphUp } from "react-icons/bs";
 interface GradesProps {
 	client: any;
 	grades: GradesType;
-	setToasts: (toasts: any) => void;
 	setGrades: React.Dispatch<React.SetStateAction<GradesType | undefined>>;
 	period: number;
 	setPeriod: (period: number) => void;
 	isMediumOrLarger:boolean;
+	createError:(message:string)=>void;
 }
 
 interface OptimizeProps {
@@ -41,10 +41,10 @@ export default function Grades({
 	client,
 	grades,
 	setGrades,
-	setToasts,
 	period,
 	setPeriod,
-	isMediumOrLarger
+	isMediumOrLarger,
+	createError
 }: GradesProps) {
 	const router = useRouter();
 	const { index }: { index?: string } = router.query;
@@ -143,19 +143,7 @@ export default function Grades({
 				setLoading(false);
 			})
 			.catch((err) => {
-				console.log(err);
-				setToasts((toasts) => {
-					return [
-						...toasts,
-						{
-							title: err.message,
-							type: "error",
-						},
-					];
-				});
-				setTimeout(() => {
-					setToasts((toasts) => toasts.slice(1));
-				}, 5000);
+				createError(err.message);
 				setLoading(false);
 			});
 	};

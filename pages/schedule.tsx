@@ -6,9 +6,10 @@ import Head from "next/head";
 
 interface ScheduleProps {
 	client: any;
+	createError:(message:string)=>void;
 }
 
-export default function Schedule({ client }: ScheduleProps) {
+export default function Schedule({ client,createError }: ScheduleProps) {
 	const router = useRouter();
 	const [loading, setLoading] = useState(true);
 	const [schedule, setSchedule] = useState<ScheduleType>();
@@ -27,7 +28,7 @@ export default function Schedule({ client }: ScheduleProps) {
 				console.log(res);
 				setSchedule(res);
 				setLoading(false);
-			});}else{setSchedule(client.loadedSchedule);setLoading(false)}
+			}).catch(err=>{createError(err.message)});}else{setSchedule(client.loadedSchedule);setLoading(false)}
 		} catch {
 			if (localStorage.getItem("remember") === "false") {
 				console.log("womp womp")

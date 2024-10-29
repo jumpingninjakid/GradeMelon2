@@ -80,9 +80,10 @@ const parseName = (name: string): string => {
 
 interface DocumentsProps {
 	client: any;
+	createError:(message:string)=>void;
 }
 
-export default function Documents({ client }: DocumentsProps) {
+export default function Documents({ client,createError }: DocumentsProps) {
 	const router = useRouter();
 	const [documents, setDocuments] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -101,7 +102,7 @@ export default function Documents({ client }: DocumentsProps) {
 				setDocuments(res);
 				client.loadedDocuments=res;
 				setLoading(false);
-			});}else{
+			}).catch(error=>{createError(error.message)});}else{
 				setDocuments(client.loadedDocuments)
 				setLoading(false)
 			}

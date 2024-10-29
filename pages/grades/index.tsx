@@ -17,18 +17,18 @@ interface GradesProps {
 	client: any;
 	grades: GradesType;
 	setGrades: (grades: GradesType) => void;
-	setToasts: (toasts: any) => void;
 	period: number;
 	setPeriod: (period: number) => void;
+	createError:(message:string)=>void;
 }
 
 export default function Grades({
 	client,
 	grades,
 	setGrades,
-	setToasts,
 	period,
 	setPeriod,
+	createError
 }: GradesProps) {
 	const router = useRouter();
 	const [loading, setLoading] = useState(grades ? false : true);
@@ -66,18 +66,7 @@ export default function Grades({
 					});
 				} catch (err) {
 					console.log(err);
-					setToasts((toasts) => {
-						return [
-							...toasts,
-							{
-								title: err.message,
-								type: "error",
-							},
-						];
-					});
-					setTimeout(() => {
-						setToasts((toasts) => toasts.slice(1));
-					}, 5000);
+					createError(err.message);
 					setLoading(false);
 				}
 			}
@@ -101,15 +90,7 @@ export default function Grades({
 			})
 			.catch((err) => {
 				console.log(err);
-				setToasts((toasts) => {
-					return [
-						...toasts,
-						{
-							title: err.message,
-							type: "error",
-						},
-					];
-				});
+				createError(err.message);
 				setLoading(false);
 			});
 	};
