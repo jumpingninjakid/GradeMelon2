@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import useWindowSize from '../hooks/useWindowSize';
 import { Analytics } from "@vercel/analytics/react";
 import allDistricts from "../lib/districts";
+import Script from "next/script";
 
 interface Toast {
 	title: string;
@@ -164,8 +165,9 @@ const logout = async () => {
 
 				<meta name="monetag" content="60496f145aa140bed68b191bae702c75"></meta>
 			</Head>
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4194284530688181"
-     crossOrigin="anonymous"></script>
+			<Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4194284530688181"
+     crossOrigin="anonymous"/>
+	 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"/>
 			<div className="absolute p-5 z-20">
 				{toasts.map(({ title, type }, i) => (
 					<div className="mb-5 z-50" key={i}>
