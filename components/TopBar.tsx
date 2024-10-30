@@ -138,10 +138,9 @@ export default function TopBar({ studentInfo, logout, client }: TopBarProps) {
 							</button>
 						</p>
 					</div>)}
-
 				<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
 					<div className=" flex flex-wrap justify-between items-center">
-						<Link href="/" className="flex items-center">
+						<Link href={client ? "/grades" : "/"} className="flex items-center">
 							<img
 								src="/assets/logo.png"
 								className="mr-3 h-6 sm:h-9"

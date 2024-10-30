@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
-import StudentVue from "studentvue";
+import StudentVue, { Client } from "studentvue";
 import { useRouter } from "next/router";
 import { Flowbite, Toast, useTheme } from "flowbite-react";
 import Topbar from "../components/TopBar";
@@ -56,6 +56,9 @@ function MyApp({ Component, pageProps }) {
 				console.log("para me?")
 				console.log(res);
 				await setClient(res);
+				districts.forEach(district=>{
+					if(district.parentVueUrl==districtURL){Cookies.set("districtURL",JSON.stringify(district))}
+				});
 				if (save) {
 					localStorage.setItem("remember", "true");
 					Cookies.set("username",username,{expires:7,secure:false,sameSite:"Lax"})
@@ -68,9 +71,7 @@ function MyApp({ Component, pageProps }) {
 							const result=await response.json()
 							Cookies.set("password",result.encryptedPassword,{expires:7})
 						})}
-					districts.forEach(district=>{
-						if(district.parentVueUrl==districtURL){Cookies.set("districtURL",JSON.stringify(district))}
-					})
+						
 				} else {
 					localStorage.setItem("remember", "false");
 					Cookies.remove("username");
@@ -108,11 +109,12 @@ function MyApp({ Component, pageProps }) {
 			await login(Cookies.get("username"),Cookies.get("password"),true,districtURL,true)}
 		if(Cookies.get("districtURL")!=undefined&&districtURL==undefined){
 			console.log("RELEASE ME")
-			console.log(JSON.parse(Cookies.get("districtURL")))
-			setDistricts([JSON.parse(Cookies.get("districtURL"))])
-			setDistrictURL(JSON.parse(Cookies.get("districtURL")).parentVueUrl)
+			let cookieDistrict=JSON.parse(Cookies.get("districtURL"));
+			console.log(cookieDistrict);
+			if(districts.findIndex(district=>district.parentVueUrl==cookieDistrict.parentVueUrl)==-1){let temp=districts;temp.push(cookieDistrict);setDistricts(temp)}
+			setDistrictURL(cookieDistrict.parentVueUrl);
 			console.log(districtURL)
-			refURL=JSON.parse(Cookies.get("districtURL")).parentVueUrl;
+			refURL=cookieDistrict.parentVueUrl;
 
 		}else{if(districtURL==undefined){setDistrictURL("https://md-mcps-psv.edupoint.com")}}
 		if(client===undefined&&Cookies.get("username")!=undefined&&Cookies.get("password")!=undefined&&districtURL!==undefined){
@@ -193,7 +195,7 @@ const logout = async () => {
 			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
 				<Topbar studentInfo={studentInfo} logout={logout} client={client} />
 				<div>
-					{noShowNav.includes(router.pathname) && (
+					{!client && (
 						<AnimateSharedLayout>
 							<Component
 								{...pageProps}
@@ -215,7 +217,7 @@ const logout = async () => {
 						</AnimateSharedLayout>
 					)}
 
-					{!noShowNav.includes(router.pathname) && isMediumOrLarger && (
+					{client && isMediumOrLarger && (
 						<div className="pb-16 md:pb-0">
 							<div className="flex overflow-x-auto">
 								<SideBar studentInfo={studentInfo} logout={logout} />
@@ -241,7 +243,7 @@ const logout = async () => {
 							</div>
 						</div>
 					)}
-					{!noShowNav.includes(router.pathname) && !isMediumOrLarger && (
+					{client && !isMediumOrLarger && (
 						<div className="pb-16 md:pb-0">
 							<div className="md:hidden">
 								<AnimateSharedLayout>
