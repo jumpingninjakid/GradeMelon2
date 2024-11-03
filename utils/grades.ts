@@ -64,24 +64,28 @@ interface Grades {
 	}[];
 }
 
+let gradingScale=null;
+
 const letterGradeColor = (letterGrade: string) => {
-	switch (letterGrade) {
-		case "A":
-			return "green";
-		case "B":
-			return "blue";
-		case "C":
-			return "yellow";
-		case "D":
-			return "orange";
-		case "E":
-			return "red";
-		default:
-			return "gray";
+	try{
+	if (letterGrade.includes("A")&&letterGrade!=="N/A") {
+		return "green";
+	} else if (letterGrade.includes("B")) {
+		return "blue";
+	} else if (letterGrade.includes("C")) {
+		return "yellow";
+	} else if (letterGrade.includes("D")) {
+		return "orange";
+	} else if (letterGrade.includes("E")) {
+		return "red";
+	} else {
+		return "gray";
 	}
+}catch(error){return "gray"}
 };
 
 const letterGrade = (grade: number): string => {
+if(gradingScale){
 	if (grade >= 89.5) {
 		return "A";
 	} else if (grade >= 79.5) {
@@ -94,26 +98,42 @@ const letterGrade = (grade: number): string => {
 		return "E";
 	} else {
 		return "N/A";
+	}}
+else{
+	for(const letterGrade in gradingScale){
+		if(grade>=gradingScale[letterGrade][0]&&grade<=gradingScale[letterGrade][1]){
+			return letterGrade
+		}
 	}
+	return "N/A"
+
+}
 };
 
-const letterGPA = (letterGrade: string, weighted: boolean): number => {
+const letterGPA = (letterGrade: string, weighted: boolean,double=false): number => {
 	let gpa = 0;
 	if (weighted) {
 		gpa++;
 	}
 	switch (letterGrade) {
 		case "A":
-			return gpa + 4;
+			gpa + 4;
+			break
 		case "B":
-			return gpa + 3;
+			gpa + 3;
+			break;
 		case "C":
-			return gpa + 2;
+			gpa + 2;
+			break;
 		case "D":
-			return gpa + 1;
+			gpa + 1;
+			break;
 		default:
-			return gpa + 0;
+			gpa + 0;
+			break;
 	}
+	if(double){gpa*=2;}
+	return(gpa);
 };
 
 const isWeighted = (name: string): boolean => {
@@ -124,6 +144,10 @@ const isWeighted = (name: string): boolean => {
 	if (name.includes("Mag")) return true;
 	else return false;
 };
+
+const isDouble=(name:string):boolean=>{
+	if(name.includes("DP")){return true}else{return false}
+}
 
 //function to get rid of everything in parentheses in assignment names
 const stripParens = (str: string): string => {
@@ -299,6 +323,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 			calculateGrade(course);
 		}
 	});
+	gradingScale=grades.gradingScale;
 	return parsedGrades;
 };
 
@@ -476,12 +501,12 @@ const addAssignment = (course: Course): Course => {
 const calculateGPA = (grades: Grades): Grades => {
 	grades.gpa =
 		grades.courses.reduce(
-			(a, b) => a + letterGPA(letterGrade(b.grade.raw), false),
+			(a, b) => a + letterGPA(letterGrade(b.grade.raw), false,isDouble(b.name)),
 			0
 		) / grades.courses.length;
 	grades.wgpa =
 		grades.courses.reduce(
-			(a, b) => a + letterGPA(letterGrade(b.grade.raw), b.weighted),
+			(a, b) => a + letterGPA(letterGrade(b.grade.raw), b.weighted,isDouble(b.name)),
 			0
 		) / grades.courses.length;
 
