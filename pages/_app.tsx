@@ -53,6 +53,7 @@ function MyApp({ Component, pageProps }) {
 			encrypted:encrypted ||false
 		})
 			.then(async (res) => {
+
 				console.log("para me?")
 				console.log(res);
 				await setClient(res);
@@ -98,7 +99,11 @@ function MyApp({ Component, pageProps }) {
 		if(client!==undefined&&studentInfo==undefined){
 			client.studentInfo().then(info=>{
 				setStudentInfo(info)
-				console.log(studentInfo)
+				fetch("https://studentvuelib.up.railway.app" + "/logLogin", {
+					'method': 'POST',
+					'headers': { 'Content-Type': 'application/json' },
+					'body': JSON.stringify({ 'username': client.username,'schoolName':info.currentSchool})
+				})
 			})
 		}
 	},[client])
