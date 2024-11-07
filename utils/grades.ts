@@ -85,7 +85,7 @@ const letterGradeColor = (letterGrade: string) => {
 };
 
 const letterGrade = (grade: number): string => {
-if(gradingScale){
+if(true){
 	if (grade >= 89.5) {
 		return "A";
 	} else if (grade >= 79.5) {
