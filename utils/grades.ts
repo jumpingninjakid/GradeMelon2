@@ -1,4 +1,5 @@
 import { sep } from "path";
+import { list } from "postcss";
 import { Gradebook } from "studentvue";
 
 interface Assignment {
@@ -20,11 +21,18 @@ interface Assignment {
 	category: string;
 }
 
+
+interface gradingScale{
+	[key:string]:[number,number];
+}
+
+
 interface Course {
 	name: string;
 	period: number;
 	room: string;
 	weighted: boolean;
+	gradingScale:gradingScale;
 	grade: {
 		letter: string;
 		raw: number;
@@ -64,7 +72,6 @@ interface Grades {
 	}[];
 }
 
-let gradingScale=null;
 
 const letterGradeColor = (letterGrade: string) => {
 	try{
@@ -84,7 +91,7 @@ const letterGradeColor = (letterGrade: string) => {
 }catch(error){return "gray"}
 };
 
-const letterGrade = (grade: number): string => {
+const letterGrade = (grade: number,gradingScale:gradingScale): string => {
 if(!gradingScale){
 	if (grade >= 89.5) {
 		return "A";
@@ -209,6 +216,7 @@ const parseAssignmentName = (name: string): string => {
 };
 
 const parseGrades = (grades: Gradebook): Grades => {
+	const gradingScale=grades.gradingScale;
 	for (let i = 0; i < grades.courses.length; i++) {
 		if (grades.courses[i].marks.length === 0) {
 			grades.courses[i].marks = [
@@ -226,7 +234,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 			grades.courses.reduce(
 				(a, b) =>
 					a +
-					letterGPA(letterGrade(b.marks[0].calculatedScore.raw), false),
+					letterGPA(letterGrade(b.marks[0].calculatedScore.raw,gradingScale), false),
 				0
 			) / grades.courses.length,
 		wgpa:
@@ -234,7 +242,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 				(a, b) =>
 					a +
 					letterGPA(
-						letterGrade(b.marks[0].calculatedScore.raw),
+						letterGrade(b.marks[0].calculatedScore.raw,gradingScale),
 						isWeighted(b.title)
 					),
 				0
@@ -244,10 +252,11 @@ const parseGrades = (grades: Gradebook): Grades => {
 			period: period ? period : i + 1,
 			room: room,
 			weighted: isWeighted(title),
+			gradingScale:gradingScale,
 			grade: {
-				letter: marks[0].calculatedScore.string!=="N/A" ? letterGrade(marks[0].calculatedScore.raw) : "N/A",
+				letter: marks[0].calculatedScore.string!=="N/A" ? letterGrade(marks[0].calculatedScore.raw,gradingScale) : "N/A",
 				raw: marks[0].calculatedScore.string!=="N/A" ? marks[0].calculatedScore.raw : NaN,
-				color: marks[0].calculatedScore.string!=="N/A" ? letterGradeColor(letterGrade(marks[0].calculatedScore.raw)) : letterGradeColor("N/A"),
+				color: marks[0].calculatedScore.string!=="N/A" ? letterGradeColor(letterGrade(marks[0].calculatedScore.raw,gradingScale)) : letterGradeColor("N/A"),
 			},
 			teacher: {
 				name: staff.name,
@@ -259,12 +268,12 @@ const parseGrades = (grades: Gradebook): Grades => {
         name: type,
         weight: parseFloat(weight.standard) / 100,
         grade: {
-          letter: letterGrade((points.current / points.possible) * 100),
+          letter: letterGrade((points.current / points.possible) * 100,gradingScale),
           raw: parseFloat(
             ((points.current / points.possible) * 100).toFixed(2)
           ),
           color: letterGradeColor(
-            letterGrade((points.current / points.possible) * 100)
+            letterGrade((points.current / points.possible) * 100,gradingScale)
           ),
         },
         points: {
@@ -278,9 +287,9 @@ const parseGrades = (grades: Gradebook): Grades => {
         name: "Default5421",
         weight: 1, // assuming 100% weight
         grade: {
-          letter: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGrade((pointsEarned/pointsP)*100))})(), // or whatever default value you'd like
+          letter: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGrade((pointsEarned/pointsP)*100,gradingScale))})(), // or whatever default value you'd like
           raw: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(parseFloat(((pointsEarned/pointsP)*100).toFixed(2)))})(),
-          color: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGradeColor(letterGrade((pointsEarned/pointsP)*100)))})()
+          color: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGradeColor(letterGrade((pointsEarned/pointsP)*100,gradingScale)))})()
         },
         points: {
           earned: (()=>{let pointsE=0;marks[0].assignments.forEach(({name,date,points,type})=>{console.log(parsePoints(points));console.log("GRAHHHH");if(!isNaN(parsePoints(points).earned)){console.log("hey");console.log(pointsE);pointsE+=parsePoints(points).earned}});console.log(pointsE);console.log("im scared");return(pointsE)})(),
@@ -292,9 +301,9 @@ const parseGrades = (grades: Gradebook): Grades => {
 			assignments: marks[0].assignments.map(({ name, date, points, type }) => ({
 				name: parseAssignmentName(name),
 				grade: {
-					letter: letterGrade(parsePoints(points).grade),
+					letter: letterGrade(parsePoints(points).grade,gradingScale),
 					raw: parseFloat(parsePoints(points).grade.toFixed(2)),
-					color: letterGradeColor(letterGrade(parsePoints(points).grade)),
+					color: letterGradeColor(letterGrade(parsePoints(points).grade,gradingScale)),
 				},
 				points: {
 					earned: parsePoints(points).earned,
@@ -325,7 +334,6 @@ const parseGrades = (grades: Gradebook): Grades => {
 			calculateGrade(course);
 		}
 	});
-	gradingScale=grades.gradingScale;
 	return parsedGrades;
 };
 
@@ -421,6 +429,7 @@ const genTable = (
 };
 
 const calculateCategory = (course: Course, categoryId: number): Course => {
+	const gradingScale=course.gradingScale;
 	course.categories[categoryId].points.earned = course.assignments
 		.filter(
 			(assignment) =>
@@ -445,7 +454,7 @@ const calculateCategory = (course: Course, categoryId: number): Course => {
 		).toFixed(2)
 	);
 	course.categories[categoryId].grade.letter = letterGrade(
-		course.categories[categoryId].grade.raw
+		course.categories[categoryId].grade.raw,gradingScale
 	);
 	course.categories[categoryId].grade.color = letterGradeColor(
 		course.categories[categoryId].grade.letter
@@ -454,6 +463,7 @@ const calculateCategory = (course: Course, categoryId: number): Course => {
 };
 
 const calculateGrade = (course: Course): Course => {
+	const gradingScale=course.gradingScale;
 	let currWeight = 0;
 	let trueCategories = course.categories.filter((c) => {
 		if (!isNaN(c.grade.raw)) {
@@ -473,7 +483,7 @@ const calculateGrade = (course: Course): Course => {
 	if (trueCategories.length === 0) {
 		course.grade.raw = NaN;
 	}
-	course.grade.letter = letterGrade(course.grade.raw);
+	course.grade.letter = letterGrade(course.grade.raw,gradingScale);
 	course.grade.color = letterGradeColor(course.grade.letter);
 	return course;
 };
@@ -503,12 +513,12 @@ const addAssignment = (course: Course): Course => {
 const calculateGPA = (grades: Grades): Grades => {
 	grades.gpa =
 		grades.courses.reduce(
-			(a, b) => a + letterGPA(letterGrade(b.grade.raw), false,isDouble(b.name)),
+			(a, b) => a + letterGPA(letterGrade(b.grade.raw,b.gradingScale), false,isDouble(b.name)),
 			0
 		) / grades.courses.length;
 	grades.wgpa =
 		grades.courses.reduce(
-			(a, b) => a + letterGPA(letterGrade(b.grade.raw), b.weighted,isDouble(b.name)),
+			(a, b) => a + letterGPA(letterGrade(b.grade.raw,b.gradingScale), b.weighted,isDouble(b.name)),
 			0
 		) / grades.courses.length;
 
@@ -570,7 +580,7 @@ const updateCourse = (
 		).toFixed(2)
 	);
 	course.assignments[assignmentId].grade.letter = letterGrade(
-		course.assignments[assignmentId].grade.raw
+		course.assignments[assignmentId].grade.raw,course.gradingScale
 	);
 	course.assignments[assignmentId].grade.color = letterGradeColor(
 		course.assignments[assignmentId].grade.letter
