@@ -1,5 +1,3 @@
-import { sep } from "path";
-import { list } from "postcss";
 import { Gradebook } from "studentvue";
 
 interface Assignment {
@@ -108,7 +106,7 @@ if(!gradingScale){
 	}}
 else{
 	for(const letterGrade in gradingScale){
-		console.log("my lord");console.log(gradingScale[letterGrade]);
+		if(grade>100){return letterGrade}
 		if(grade>=gradingScale[letterGrade][0]&&grade<=gradingScale[letterGrade][1]){
 			
 			return letterGrade
@@ -292,7 +290,7 @@ const parseGrades = (grades: Gradebook): Grades => {
           color: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGradeColor(letterGrade((pointsEarned/pointsP)*100,gradingScale)))})()
         },
         points: {
-          earned: (()=>{let pointsE=0;marks[0].assignments.forEach(({name,date,points,type})=>{console.log(parsePoints(points));console.log("GRAHHHH");if(!isNaN(parsePoints(points).earned)){console.log("hey");console.log(pointsE);pointsE+=parsePoints(points).earned}});console.log(pointsE);console.log("im scared");return(pointsE)})(),
+          earned: (()=>{let pointsE=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsE+=parsePoints(points).earned}});return(pointsE)})(),
           possible: (()=>{let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(pointsP)})(),
         },
       },
@@ -599,10 +597,8 @@ function abbreviate(category){
 	var seperator;
 	if(category.includes(" ")){seperator=" "}
 	else if(category.includes("/")){seperator="/"}
-	else{console.log("word");["A","E","I","O","U"].forEach((vowel)=>{category=category.replaceAll(vowel,"")});return category}
+	else{["A","E","I","O","U"].forEach((vowel)=>{category=category.replaceAll(vowel,"")});return category}
 	const words=category.split(seperator).filter((word)=>word!="/"&&word!=" ");
-	console.log(words)
-	console.log(category)
 	return(words[0].trim()[0]+words[1].trim()[0])
 }
 
