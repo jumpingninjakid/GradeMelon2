@@ -76,7 +76,7 @@ const letterGradeColor = (letterGrade: string) => {
 		return "yellow";
 	} else if (letterGrade.includes("D")) {
 		return "orange";
-	} else if (letterGrade.includes("E")) {
+	} else if (letterGrade.includes("E")||letterGrade.includes("F")) {
 		return "red";
 	} else {
 		return "gray";
@@ -85,7 +85,7 @@ const letterGradeColor = (letterGrade: string) => {
 };
 
 const letterGrade = (grade: number): string => {
-if(true){
+if(!gradingScale){
 	if (grade >= 89.5) {
 		return "A";
 	} else if (grade >= 79.5) {
@@ -101,7 +101,9 @@ if(true){
 	}}
 else{
 	for(const letterGrade in gradingScale){
+		console.log("my lord");console.log(gradingScale[letterGrade]);
 		if(grade>=gradingScale[letterGrade][0]&&grade<=gradingScale[letterGrade][1]){
+			
 			return letterGrade
 		}
 	}
