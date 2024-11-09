@@ -171,10 +171,20 @@ const logout = async () => {
 				<title>Grade Melon</title>
 
 				<meta name="monetag" content="60496f145aa140bed68b191bae702c75"></meta>
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></Script>
+          <Script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-3YWWBKH03T');
+              `,
+            }}
+          />
 			</Head>
 			<Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4194284530688181"
      crossOrigin="anonymous"/>
-	 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"/>
 			<div className="absolute p-5 z-20">
 				{toasts.map(({ title, type }, i) => (
 					<div className="mb-5 z-50" key={i}>

@@ -592,14 +592,26 @@ const updateCourse = (
 	return course;
 };
 
-function abbreviate(category){
-	category=category.toUpperCase();
-	var seperator;
-	if(category.includes(" ")){seperator=" "}
-	else if(category.includes("/")){seperator="/"}
-	else{["A","E","I","O","U"].forEach((vowel)=>{category=category.replaceAll(vowel,"")});return category}
-	const words=category.split(seperator).filter((word)=>word!="/"&&word!=" ");
-	return(words[0].trim()[0]+words[1].trim()[0])
+function abbreviate(category) {
+    category = category.toUpperCase();
+    var separator;
+
+    if (category.includes(" ")) {
+        separator = " ";
+    } else if (category.includes("/")) {
+        separator = "/";
+    } else {
+        // Remove vowels only if they are not the first character in the string
+        ["A", "E", "I", "O", "U"].forEach((vowel) => {
+            category = category.replaceAll(
+                new RegExp(`(?<!^)${vowel}`, 'g'),
+                ""
+            );
+        });
+        return category;
+    }
+    const words = category.split(separator).filter((word) => word !== "/" && word !== " ");
+    return (words[0].trim()[0] + words[1].trim()[0]);
 }
 
 export {
