@@ -155,7 +155,8 @@ export default function Grades({
 	const optimize = () => {
 		setModalType("optimize");
 		let tempProps = {};
-		tempProps["desiredGrade"] = 90;
+		tempProps["desiredGrade"] = course.gradingScale ? String(course.gradingScale[Object.keys(course.gradingScale)[0]][0]): 90;
+;
 		course.categories.forEach((cat) => {
 			tempProps[cat.name] = cat.weight * 100;
 		});
