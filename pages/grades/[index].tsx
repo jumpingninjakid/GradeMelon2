@@ -213,8 +213,7 @@ export default function Grades({
 							<p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
 								{course?.assignments[
 									modalDetails
-								]?.date.due.toLocaleDateString()}
-							</p>
+								]?.date.due.toLocaleDateString()}course							</p>
 							<p className="font-bold text-black dark:text-white">Category</p>
 							<p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
 								{course?.assignments[modalDetails]?.category}
@@ -241,7 +240,7 @@ export default function Grades({
 												updateOptimize(e.target.value, "desiredGrade")
 											}
 											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-											placeholder={grades.gradeScale ? String(grades.gradeScale[Object.keys(grades.gradeScale)[0]][0]): "90"}
+											placeholder={course.gradeScale ? String(course.gradeScale[Object.keys(course.gradeScale)[0]][0]): "90"}
 										/>
 									</div>
 								</div>
