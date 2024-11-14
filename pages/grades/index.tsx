@@ -188,7 +188,7 @@ export default function Grades({
 							className="grid gap-5 2col:grid-cols-2 3col:grid-cols-3 4col:grid-cols-4 items-stretch w-full"
 							//style={{ gridTemplateColumns: "repeat(auto-fit, 384px)" }}
 						>
-							{grades?.courses.map(({ name, period, grade, teacher }, i) => (
+							{grades?.courses.map(({ name, period, grade, teacher, gradingScale}, i) => (
 								<div className="w-full md:w-96" key={i}>
 									<motion.div
 										layout="preserve-aspect"
@@ -227,8 +227,8 @@ export default function Grades({
 													layout="preserve-aspect"
 													className={`text-xl md:text-3xl font-bold text-${grade.color}-400`}
 												>
-													{grade.letter}
-													{!isNaN(grade.raw) && ` (${grade.raw}%)`}
+													{gradingScale ? grade.letter:""}
+													{gradingScale ? (!isNaN(grade.raw) && ` (${grade.raw}%)`) : (!isNaN(grade.raw) ? `${grade.raw}%`:"N/A")}
 												</motion.span>
 												<Link href={`/grades/${i}`} legacyBehavior>
 													<button className="rounded-lg bg-primary-500 px-5 py-2.5 text-center text-xs sm:text-sm font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">

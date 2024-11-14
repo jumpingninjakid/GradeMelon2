@@ -252,8 +252,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 			weighted: isWeighted(title),
 			gradingScale:gradingScale,
 			grade: {
-				letter: marks[0].calculatedScore.string!=="N/A" ? letterGrade(marks[0].calculatedScore.raw,gradingScale) : "N/A",
-				raw: marks[0].calculatedScore.string!=="N/A" ? marks[0].calculatedScore.raw : NaN,
+				letter: "0",raw: marks[0].calculatedScore.string!=="N/A" ? marks[0].calculatedScore.raw : NaN,
 				color: marks[0].calculatedScore.string!=="N/A" ? letterGradeColor(letterGrade(marks[0].calculatedScore.raw,gradingScale)) : letterGradeColor("N/A"),
 			},
 			teacher: {
@@ -266,7 +265,7 @@ const parseGrades = (grades: Gradebook): Grades => {
         name: type,
         weight: parseFloat(weight.standard) / 100,
         grade: {
-          letter: letterGrade((points.current / points.possible) * 100,gradingScale),
+          letter: gradingScale ? letterGrade((points.current / points.possible) * 100,gradingScale) : String((points.current/points.possible)*100),
           raw: parseFloat(
             ((points.current / points.possible) * 100).toFixed(2)
           ),
@@ -285,7 +284,7 @@ const parseGrades = (grades: Gradebook): Grades => {
         name: "Default5421",
         weight: 1, // assuming 100% weight
         grade: {
-          letter: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGrade((pointsEarned/pointsP)*100,gradingScale))})(), // or whatever default value you'd like
+          letter: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(gradingScale ? letterGrade((pointsEarned/pointsP)*100,gradingScale):String((pointsEarned/pointsP)*100))})(), // or whatever default value you'd like
           raw: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(parseFloat(((pointsEarned/pointsP)*100).toFixed(2)))})(),
           color: (()=>{let pointsEarned=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsEarned+=parsePoints(points).earned}});let pointsP=0;marks[0].assignments.forEach(({name,date,points,type})=>{if(!isNaN(parsePoints(points).earned)){pointsP+=parsePoints(points).possible}});return(letterGradeColor(letterGrade((pointsEarned/pointsP)*100,gradingScale)))})()
         },
@@ -299,7 +298,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 			assignments: marks[0].assignments.map(({ name, date, points, type }) => ({
 				name: parseAssignmentName(name),
 				grade: {
-					letter: letterGrade(parsePoints(points).grade,gradingScale),
+					letter: gradingScale ? letterGrade(parsePoints(points).grade,gradingScale) : String(parsePoints(points).grade),
 					raw: parseFloat(parsePoints(points).grade.toFixed(2)),
 					color: letterGradeColor(letterGrade(parsePoints(points).grade,gradingScale)),
 				},

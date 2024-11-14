@@ -414,7 +414,7 @@ export default function Grades({
 							>
 								<p className="absolute">
 									{name} ({!isNaN(grade.raw) ? `${grade.raw}%` : "N/A"}) -{" "}
-									{points.earned}/{points.possible}
+									{Math.floor(points.earned*100)/100}/{Math.floor(points.possible*100)/100}
 								</p>
 							</div>
 						</div>
