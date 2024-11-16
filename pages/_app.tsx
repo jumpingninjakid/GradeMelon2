@@ -104,7 +104,17 @@ function MyApp({ Component, pageProps }) {
 					'headers': { 'Content-Type': 'application/json' },
 					'body': JSON.stringify({ 'username': client.username,'schoolName':info.currentSchool})
 				})
-			})
+			}).catch(error=>{client.ChildList().then(info=>{
+				setStudentInfo(info);
+				fetch("https://studentvuelib.up.railway.app" + "/logLogin", {
+					'method': 'POST',
+					'headers': { 'Content-Type': 'application/json' },
+					'body': JSON.stringify({ 'username': client.username,'schoolName':info.currentSchool})
+				})
+
+			}).catch()
+		
+		})
 		}
 	},[client])
 
@@ -171,7 +181,7 @@ const logout = async () => {
 				<title>Grade Melon</title>
 
 				<meta name="monetag" content="60496f145aa140bed68b191bae702c75"></meta>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></script>
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></Script>
           <script
             dangerouslySetInnerHTML={{
               __html: `
