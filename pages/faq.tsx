@@ -103,13 +103,41 @@ export default function FAQ() {
 						</a>
 						.
 					</p>
-					<br/>
 					<p className="px-4 mt-4 leading-relaxed dark:text-white">
-						Or feel free to join our discord {" "}
+						Or, feel free to join our {" "}
 						<a href="https://discord.gg/nwRs8WcQGc" className="text-primary-500">
-							GradeMelon Discord
+							Discord
 						</a>
-						.
+						!
+					</p>
+				</details>
+				<details className="group [&_summary::-webkit-details-marker]:hidden">
+					<summary className="flex items-center justify-between p-4 rounded-lg cursor-pointer bg-white dark:bg-gray-800 border dark:border-gray-700 dark:text-white">
+						<h2 className="font-medium">
+							Who's behind Grade Melon?
+						</h2>
+
+						<svg
+							className="ml-1.5 h-5 w-5 flex-shrink-0 transition duration-300 group-open:-rotate-180"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+					</summary>
+
+					<p className="px-4 mt-4 leading-relaxed dark:text-white">
+						Grade Melon was originally created by Tinu Vanapamula, but in 2023, Synergy made changes that broke Grade Melon. As a graduating senior, Tinu had other priorities.<br></br>My name is Jonathan Shapiro. I'm a student at Whitman, and in 2024, I took it upon myself to restore the project.<br></br>By September, I had things working again, and I've been working on expanding and improving it ever since.
+						<br></br>
+						<br></br>
+						You can contact me @J.shap06 on my personal insta, or reach out through the Grade Melon discord, insta, etc.
 					</p>
 				</details>
 			</div>
