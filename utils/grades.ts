@@ -122,29 +122,17 @@ const letterGPA = (letterGrade: string, weighted: boolean,double=false): number 
 	if (weighted) {
 		gpa++;
 	}
-	switch (letterGrade) {
-		case "A":
-			gpa + 4;
-			break
-		case "B":
-			gpa + 3;
-			break;
-		case "C":
-			gpa + 2;
-			break;
-		case "D":
-			gpa + 1;
-			break;
-		default:
-			gpa + 0;
-			break;
-	}
+	if(letterGrade.includes("A")&&letterGrade!="N/A"){gpa+=4;}
+	else if(letterGrade.includes("B")){gpa+=3;}
+	else if(letterGrade.includes("C")){gpa+=2;}
+	else if(letterGrade.includes("D")){gpa+=1;}
+	else if(letterGrade.includes("E")||letterGrade.includes("F")){gpa+=0;}
+
 	if(double){gpa*=2;}
 	return(gpa);
 };
 
 const isWeighted = (name: string): boolean => {
-	let weighted = false;
 	if (name.includes("AP")) return true;
 	if (name.includes("Hon")) return true;
 	if (name.includes("IB")) return true;
