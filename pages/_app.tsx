@@ -181,7 +181,7 @@ const logout = async () => {
 				<title>Grade Melon</title>
 
 				<meta name="monetag" content="60496f145aa140bed68b191bae702c75"></meta>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></Script>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></script>
           <script
             dangerouslySetInnerHTML={{
               __html: `
