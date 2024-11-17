@@ -114,7 +114,7 @@ export default function FAQ() {
 				<details className="group [&_summary::-webkit-details-marker]:hidden">
 					<summary className="flex items-center justify-between p-4 rounded-lg cursor-pointer bg-white dark:bg-gray-800 border dark:border-gray-700 dark:text-white">
 						<h2 className="font-medium">
-							Who's behind Grade Melon?
+							Who&#39;s behind Grade Melon?
 						</h2>
 
 						<svg
