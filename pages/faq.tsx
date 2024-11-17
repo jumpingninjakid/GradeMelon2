@@ -134,7 +134,11 @@ export default function FAQ() {
 					</summary>
 
 					<p className="px-4 mt-4 leading-relaxed dark:text-white">
-					Grade Melon was originally created by Tinu Vanapamula, but in 2023, Synergy made changes that broke Grade Melon. As a graduating senior, Tinu had other priorities.&lt;br&gt;&lt;br&gt;My name is Jonathan Shapiro. I&#39;m a student at Whitman, and in 2024, I took it upon myself to restore the project.&lt;br&gt;&lt;br&gt;By September, I had things working again, and I&#39;ve been working on expanding and improving it ever since.
+					Grade Melon was originally created by Tinu Vanapamula, but in 2023, Synergy made changes that broke Grade Melon. As a graduating senior, Tinu had other priorities.
+					<br></br>
+					My name is Jonathan Shapiro. I&#39;m a student at Whitman, and in 2024, I took it upon myself to restore the project.
+					<br></br>
+					By September, I had things working again, and I&#39;ve been working on expanding and improving it ever since.
 						<br></br>
 						<br></br>
 						You can contact me <a className="text-primary-500" href="https://instagram.com/j.shap06/">@J.shap06</a> on my personal insta, or reach out through the Grade Melon discord, insta, etc.
