@@ -240,7 +240,8 @@ const parseGrades = (grades: Gradebook): Grades => {
 			weighted: isWeighted(title),
 			gradingScale:gradingScale,
 			grade: {
-				letter: "0",raw: marks[0].calculatedScore.string!=="N/A" ? marks[0].calculatedScore.raw : NaN,
+				letter: gradingScale ? (marks[0].calculatedScore.string!=="N/A" ? letterGrade(marks[0].calculatedScore.raw,gradingScale) : "N/A") : (marks[0].calculatedScore.string!=="N/A" ? String(marks[0].calculatedScore.raw) : "N/A"),
+				raw: marks[0].calculatedScore.string!=="N/A" ? marks[0].calculatedScore.raw : NaN,
 				color: marks[0].calculatedScore.string!=="N/A" ? letterGradeColor(letterGrade(marks[0].calculatedScore.raw,gradingScale)) : letterGradeColor("N/A"),
 			},
 			teacher: {
