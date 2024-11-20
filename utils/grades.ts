@@ -237,6 +237,7 @@ const parseGrades = (grades: Gradebook): Grades => {
 		courses: grades.courses.map(({ title, period, room, staff, marks }, i) => ({
 			name: stripParens(title),
 			period: period ? period : i + 1,
+			layoutID:null,
 			room: room,
 			weighted: isWeighted(title),
 			gradingScale:gradingScale,
