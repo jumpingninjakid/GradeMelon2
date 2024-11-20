@@ -188,11 +188,11 @@ export default function Grades({
 							className="grid gap-5 2col:grid-cols-2 3col:grid-cols-3 4col:grid-cols-4 items-stretch w-full"
 							//style={{ gridTemplateColumns: "repeat(auto-fit, 384px)" }}
 						>
-							{grades?.courses.map(({ name, period, grade, teacher, gradingScale}, i) => (
+							{grades?.courses.map(({ name, period, grade, teacher, gradingScale,layoutID}, i) => (
 								<div className="w-full md:w-96" key={i}>
 									<motion.div
 										layout="preserve-aspect"
-										layoutId={`card-${period}`}
+										layoutId={`card-${layoutID}`}
 										className="h-full flex flex-col justify-between gap-2 md:gap-5 p-4 sm:p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
 									>
 										<div className="">
@@ -203,7 +203,7 @@ export default function Grades({
 															{period} -{" "}
 															<motion.span
 																layout
-																layoutId={`name-${period}`}
+																layoutId={`name-${layoutID}`}
 																className="font-semibold"
 															>
 																{name}
@@ -211,7 +211,7 @@ export default function Grades({
 														</p>
 													</h5>
 													<motion.p
-														layoutId={`teacher-${period}`}
+														layoutId={`teacher-${layoutID}`}
 														layout
 														className="text-md tracking-tight text-gray-900 dark:text-white"
 													>
@@ -223,7 +223,7 @@ export default function Grades({
 										<div className="">
 											<div className="flex items-center justify-between">
 												<motion.span
-													layoutId={`grade-${period}`}
+													layoutId={`grade-${layoutID}`}
 													layout="preserve-aspect"
 													className={`text-xl md:text-3xl font-bold text-${grade.color}-400`}
 												>
