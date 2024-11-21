@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps }) {
 				console.log(res);
 				await setClient(res);
 				districts.forEach(district=>{
-					if(district.parentVueUrl==districtURL){Cookies.set("districtURL",JSON.stringify(district))}
+					if(district.parentVueUrl==districtURL){Cookies.set("districtURL",JSON.stringify(district),{expires:7})}
 				});
 				if (save) {
 					localStorage.setItem("remember", "true");
