@@ -6,7 +6,7 @@ import { Flowbite, Toast, useTheme } from "flowbite-react";
 import Topbar from "../components/TopBar";
 import SideBar from "../components/SideBar";
 import MobileBar from "../components/MobileBar";
-import { Grades } from "../utils/grades";
+import { Grades,parseGrades } from "../utils/grades";
 import Head from "next/head";
 import { HiX } from "react-icons/hi";
 import BackgroundColor from "../components/BackgroundColor";
@@ -53,10 +53,11 @@ function MyApp({ Component, pageProps }) {
 			encrypted:encrypted ||false
 		})
 			.then(async (res) => {
-
+				const gradebook=res[1];
+				const fetchedClient=res[0];
 				console.log("para me?")
-				console.log(res);
-				await setClient(res);
+				console.log(fetchedClient);
+				await setClient(fetchedClient);
 				districts.forEach(district=>{
 					if(district.parentVueUrl==districtURL){Cookies.set("districtURL",JSON.stringify(district),{expires:7})}
 				});
@@ -79,6 +80,9 @@ function MyApp({ Component, pageProps }) {
 					Cookies.remove("password");
 					Cookies.remove("districtURL");
 				}
+				const parsedGrades=parseGrades(gradebook);
+				await setGrades(parsedGrades);
+				await setPeriod(parsedGrades.period.index);
 				if(router.pathname=="/"||router.pathname=="/login"){router.push("/grades")}
 				
 				await setLoading(false);
