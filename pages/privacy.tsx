@@ -15,7 +15,7 @@ export default function privacy() {
 			<hr/>
 			<p className="pt-5">
 			This Site is affiliated with Monumetric (dba for The Blogger Network, LLC) for the purposes of placing advertising on the Site, and Monumetric will collect and use certain data for advertising purposes. To learn more about Monumetric&rsquo;s
-			data usage, click here: <a target="_blank" href="http://www.monumetric.com/publisher-advertising-privacy">Publisher Advertising Privacy</a>
+			data usage, click here: <a href="http://www.monumetric.com/publisher-advertising-privacy">Publisher Advertising Privacy</a>
 
 			</p>
 			<div className="absolute bottom-10">
