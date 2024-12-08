@@ -12,12 +12,6 @@ export default function privacy() {
 				These login cookies are deleted after a week or when you log out, whichever comes first.
 			</p>
 			<br/>
-			<hr/>
-			<p className="pt-5">
-			This Site is affiliated with Monumetric (dba for The Blogger Network, LLC) for the purposes of placing advertising on the Site, and Monumetric will collect and use certain data for advertising purposes. To learn more about Monumetric&rsquo;s
-			data usage, click here: <a href="http://www.monumetric.com/publisher-advertising-privacy">Publisher Advertising Privacy</a>
-
-			</p>
 			<div className="absolute bottom-10">
 			<h1 className="pt-5 font-bold text-3xl">Contact Us</h1>
 			<p>
