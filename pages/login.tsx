@@ -83,8 +83,9 @@ export default function Login({
 		<div>
 			<Head>
 				<title>Login</title>
-				<Script src="//servedby.eleavers.com/ads/ads.php?t=MzExNjc7MjEyMzg7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"/>
 			</Head>
+			<Script src="//servedby.eleavers.com/ads/ads.php?t=MzExNjc7MjEyMzg7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"/>
+		
 			<Modal show={showModal} onClose={() => setShowModal(false)}>
 				<Modal.Header>Choose School District</Modal.Header>
 				<Modal.Body>
