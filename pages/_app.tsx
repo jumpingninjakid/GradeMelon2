@@ -185,7 +185,8 @@ const logout = async () => {
 				<title>Grade Melon</title>
 
 				<meta name="monetag" content="60496f145aa140bed68b191bae702c75"></meta>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></script>
+         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YWWBKH03T"></script>
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -197,8 +198,6 @@ const logout = async () => {
             }}
           />
 			</Head>
-			<Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4194284530688181"
-     crossOrigin="anonymous"/>
 			<div className="absolute p-5 z-20">
 				{toasts.map(({ title, type }, i) => (
 					<div className="mb-5 z-50" key={i}>
@@ -220,7 +219,7 @@ const logout = async () => {
 					</div>
 				))}
 			</div>
-			<BackgroundColor />
+		
 			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
 				<Topbar studentInfo={studentInfo} logout={logout} client={client} />
 				<div>
@@ -302,6 +301,7 @@ const logout = async () => {
 					)}
 				</div>
 			</div>
+			
 		</Flowbite>
 	);
 }
