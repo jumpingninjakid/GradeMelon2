@@ -4,6 +4,7 @@ import { Modal, Spinner } from "flowbite-react";
 import { BiSearchAlt } from "react-icons/bi";
 import Head from "next/head";
 import StudentVue from "studentvue";
+import Script from "next/script";
 
 import Cookies from "js-cookie";
 
@@ -82,6 +83,7 @@ export default function Login({
 		<div>
 			<Head>
 				<title>Login</title>
+				<Script src="//servedby.eleavers.com/ads/ads.php?t=MzExNjc7MjEyMzg7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"/>
 			</Head>
 			<Modal show={showModal} onClose={() => setShowModal(false)}>
 				<Modal.Header>Choose School District</Modal.Header>
