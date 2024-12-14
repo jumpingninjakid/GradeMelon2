@@ -9,7 +9,6 @@ import MobileBar from "../components/MobileBar";
 import { Grades,parseGrades } from "../utils/grades";
 import Head from "next/head";
 import { HiX } from "react-icons/hi";
-import BackgroundColor from "../components/BackgroundColor";
 import { AnimateSharedLayout } from "framer-motion";
 import Cookies from "js-cookie";
 import useWindowSize from '../hooks/useWindowSize';
