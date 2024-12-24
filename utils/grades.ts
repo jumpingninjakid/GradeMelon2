@@ -163,7 +163,7 @@ const parsePoints = (points: string) => {
 	else if(p.length==2){
 	return{
 		grade:(p[0]/p[1])*100,
-		earned:p[0],
+		earned:isNaN(p[0]) ? 0 : p[0],
 		possible: isNaN(p[1]) ? 0 : p[1]
 	}
 }
